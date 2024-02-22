@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.core.graphics.red
 import androidx.recyclerview.widget.RecyclerView
 
-class BaseAdapter(var arrayList: ArrayList<Int>)  : BaseAdapter() {
+class BaseAdapter(var arrayList: ArrayList<String>)  : BaseAdapter() {
     override fun getCount(): Int {
         return arrayList.size
     }

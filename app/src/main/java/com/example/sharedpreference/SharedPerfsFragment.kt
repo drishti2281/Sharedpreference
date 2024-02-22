@@ -27,15 +27,17 @@ class SharedPerfsFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     var binding: FragmentSharedPerfsBinding? =null
-    lateinit var sharedPrefsActivity: MainActivity
+    lateinit var mainActivity: MainActivity
     lateinit var sharedPreferences: SharedPreferences
     lateinit var editor: Editor
     var count: Int = 0
+    var color: String = ""
     lateinit var recyclerView: RecyclerView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedPrefsActivity = activity as MainActivity
+        mainActivity = activity as MainActivity
 
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
@@ -54,10 +56,10 @@ class SharedPerfsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView = RecyclerView(sharedPrefsActivity)
-        binding?.recyclerView?.layoutManager = LinearLayoutManager(sharedPrefsActivity)
+        recyclerView = RecyclerView(mainActivity)
+        binding?.recyclerView?.layoutManager = LinearLayoutManager(mainActivity)
       //  binding?.recyclerView?.adapter = RecyclerView
-        sharedPreferences = sharedPrefsActivity.getSharedPreferences(sharedPrefsActivity.resources.getString(
+        sharedPreferences = mainActivity.getSharedPreferences(mainActivity.resources.getString(
             R.string.app_name), MODE_PRIVATE)
         editor =sharedPreferences. edit()
 
@@ -68,19 +70,19 @@ class SharedPerfsFragment : Fragment() {
 
         binding?.btnRed?.setOnClickListener {
             if (binding?.etcount?.text?.toString()?.trim().isNullOrEmpty())
-                binding?.etcount?.error = sharedPrefsActivity.resources.getString(R.string.enter_number)
+                binding?.etcount?.error = mainActivity.resources.getString(R.string.enter_number)
         }
         binding?.btnGreen?.setOnClickListener {
             if (binding?.etcount?.text?.toString()?.trim().isNullOrEmpty())
-                binding?.etcount?.error = sharedPrefsActivity.resources.getString(R.string.enter_number)
+                binding?.etcount?.error = mainActivity.resources.getString(R.string.enter_number)
         }
         binding?.btnBlue?.setOnClickListener {
             if (binding?.etcount?.text?.toString()?.trim().isNullOrEmpty())
-                binding?.etcount?.error = sharedPrefsActivity.resources.getString(R.string.enter_number)
+                binding?.etcount?.error = mainActivity.resources.getString(R.string.enter_number)
         }
         binding?.btnSave?.setOnClickListener {
             if(binding?.etcount?.text?.toString()?.trim().isNullOrEmpty())
-                binding?.etcount?.error = sharedPrefsActivity.resources.getString(R.string.enter_number)
+                binding?.etcount?.error = mainActivity.resources.getString(R.string.enter_number)
 
             editor.putInt("RollNo", (binding?.etcount?.text?.toString()?:"0").toInt())
             editor.commit()
