@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.sharedpreference.databinding.FragmentSharedPerfsBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -26,13 +27,17 @@ class SharedPerfsFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    //Declaration  of binding,Activity,editor,Sharedpreference,int,adapter
     var binding: FragmentSharedPerfsBinding? =null
     lateinit var mainActivity: MainActivity
     lateinit var sharedPreferences: SharedPreferences
     lateinit var editor: Editor
     var count: Int = 0
-    var color: String = ""
-    lateinit var recyclerView: RecyclerView
+    var color: Int = 0
+    lateinit var adapter: RecyclerView
+    //0 is use for select the red,green,blue Color in the recycler view
+    var selectColor: Int = 0
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,27 +61,33 @@ class SharedPerfsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView = RecyclerView(mainActivity)
-        binding?.recyclerView?.layoutManager = LinearLayoutManager(mainActivity)
+        //initialize
+        adapter= RecyclerView(mainActivity)
+        binding?.recyclerView?.layoutManager = LinearLayoutManager(mainActivity,LinearLayoutManager.VERTICAL,false)
       //  binding?.recyclerView?.adapter = RecyclerView
         sharedPreferences = mainActivity.getSharedPreferences(mainActivity.resources.getString(
             R.string.app_name), MODE_PRIVATE)
-        editor =sharedPreferences. edit()
+        editor =sharedPreferences.edit()
 
-        count = sharedPreferences.getInt("number",0)
+        count = sharedPreferences.getInt("Countnumber",0)
+        color = sharedPreferences.getInt("Changecolor",0)
 
-        val number = null
-        binding?.etcount?.setText(number.toString())
+
 
         binding?.btnRed?.setOnClickListener {
+            selectColor = 0
             if (binding?.etcount?.text?.toString()?.trim().isNullOrEmpty())
                 binding?.etcount?.error = mainActivity.resources.getString(R.string.enter_number)
+
         }
         binding?.btnGreen?.setOnClickListener {
+            selectColor = 1
             if (binding?.etcount?.text?.toString()?.trim().isNullOrEmpty())
                 binding?.etcount?.error = mainActivity.resources.getString(R.string.enter_number)
+
         }
         binding?.btnBlue?.setOnClickListener {
+            selectColor = 2
             if (binding?.etcount?.text?.toString()?.trim().isNullOrEmpty())
                 binding?.etcount?.error = mainActivity.resources.getString(R.string.enter_number)
         }
